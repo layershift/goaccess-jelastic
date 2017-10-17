@@ -6,7 +6,7 @@
         "name": "Goaccess log parser",
         "version": "1",
         "homepage": "https://goaccess.io/",
-        "logo": "https://github.com/layershift/goaccess-jelastic/raw/master/logfile.png",
+        "logo": "https://raw.githubusercontent.com/layershift/goaccess-jelastic/master/logfile.jpg",
         "targetNodes": {
             "nodeType": [
                 "*"
