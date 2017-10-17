@@ -1,0 +1,56 @@
+{
+    "jpsType": "update",
+    "jpsVersion": "0.8",
+    "application": {
+        "id": "goaccess-jps",
+        "name": "Goaccess log parser",
+        "version": "1",
+        "homepage": "https://goaccess.io/",
+        "logo": "https://github.com/layershift/goaccess-jelastic/raw/master/logfile.png",
+        "targetNodes": {
+            "nodeType": [
+                "*"
+            ]
+        },
+        "description": {
+            "en": "GoAccess was designed to be a fast, terminal-based log analyzer. Its core idea is to quickly analyze and view web server statistics in real time without needing to use your browser (great if you want to do a quick analysis of your access log via SSH, or if you simply love working in the terminal)."
+        },
+        "onInstall": {
+            "call": [
+                "installGoaccess"
+            ]
+        },
+        "onUninstall": {
+            "call": "removeGoaccess"
+        },
+        "procedures": [{
+            "id": "installGoaccess",
+            "onCall": [{
+                "execCmd": [{
+                    "nodeGroup": "${targetNodes.nodeGroup}",
+                    "user": "root",
+                    "commands": [
+                        "tty -s && mesg n 2>&1",
+                        "yum clean all 2>/dev/null 1>/dev/null",
+                        "yum -y install epel-release 2>/dev/null 1>/dev/null",
+                        "yum -y install goaccess 2>/dev/null 1>/dev/null"
+                    ]
+                }]
+            }]
+        }, {
+            "id": "removeGoaccess",
+            "onCall": [{
+                "executeShellCommands": [{
+                    "nodeGroup": "${targetNodes.nodeGroup}",
+                    "user": "root",
+                    "commands": [
+                        "yum -y erase goaccess 2>/dev/null 1>/dev/null"
+                    ]
+                }]
+            }]
+        }],
+        "success": {
+            "text": "Goaccess has been installed successfully.</br></br>Start parsing logs by accessing your node via <a href='https://kb.layershift.com/jelastic-ssh-access#connect' target='_blank'>SSH Gateway</a>.</br>To run goaccess simply type in:</br>    <pre>goaccess -f /path/to/logfile</pre>.</br></br>Features list: https://goaccess.io/features"
+        }
+    }
+}
